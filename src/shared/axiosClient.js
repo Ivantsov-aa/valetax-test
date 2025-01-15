@@ -5,9 +5,9 @@ const onSuccess = (response) => {
   return response;
 };
 
-const onError = (error) => {
-  console.error(`[request error]: ${JSON.stringify(error)}`);
-  return Promise.reject(error);
+const onError = ({response}) => {
+  console.error(`[request error]: ${JSON.stringify(response.data)}`);
+  return Promise.reject(response.data);
 };
 
 export const axiosClient = axios.create({
