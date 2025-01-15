@@ -32,7 +32,7 @@ export default function Modal({modalParams, setModalParams, mutate}) {
     } catch (err) {
       setModalParams({
         ...modalParams,
-        error: err.message
+        error: err.data.message
       })
     }
   };
@@ -73,7 +73,7 @@ export default function Modal({modalParams, setModalParams, mutate}) {
           />
           :
           <DialogContentText>
-            {`Do you want to delete ${modalParams.name}?`}
+            {modalParams.error || `Do you want to delete ${modalParams.name}?`}
           </DialogContentText>
         }
       </DialogContent>
@@ -81,7 +81,13 @@ export default function Modal({modalParams, setModalParams, mutate}) {
         <Button onClick={handleClose}>
           Cancel
         </Button>
-        <Button {...modalParams.button} onClick={handleSubmit}>
+        <Button 
+          sx={{
+            display: !modalParams.input && modalParams.error && "none"
+          }}
+          {...modalParams.button}
+          onClick={handleSubmit}
+        >
           {modalParams.button.text}
         </Button>
       </DialogActions>
